@@ -24,7 +24,7 @@ const App = () => {
         // The signed-in user info.
         const user = result.user;
         setUser(user);
-        console.log(user);
+        console.log(user, token);
         // ...
       })
       .catch((error) => {
@@ -36,6 +36,7 @@ const App = () => {
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
+        console.log( errorCode, errorMessage, email, credential);
       });
   };
   // Sign Out
@@ -66,6 +67,7 @@ const App = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
         // ..
       });
   };
