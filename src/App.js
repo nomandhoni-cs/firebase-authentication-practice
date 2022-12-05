@@ -8,9 +8,9 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { firebaseConfig } from "./firebaseConfig";
 import { initializeApp } from "firebase/app";
 initializeApp(firebaseConfig);
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
 const App = () => {
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [displayName, setDisplayName] = React.useState("");
@@ -78,9 +78,9 @@ const App = () => {
       <Avatar
         alt={user.displayName}
         src={user.photoURL}
-        sx={{ width: 24, height: 24 }}
+        sx={{ width: 50, height: 50 }}
       />
-      <p>{user.displayName}</p>
+      <p style={{fontSize: '30px'}}>{user.displayName}</p>
       <Button variant="contained" onClick={() => handleSignOut()}>
         Sign Out
       </Button>
