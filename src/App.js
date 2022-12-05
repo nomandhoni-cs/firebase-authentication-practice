@@ -3,13 +3,13 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Avatar, Button, Stack } from "@mui/material";
-import {
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
-import { auth, provider } from "./firebaseConfig";
-
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { firebaseConfig } from "./firebaseConfig";
+import { initializeApp } from "firebase/app";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const provider = new GoogleAuthProvider();
 const App = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -24,6 +24,7 @@ const App = () => {
         // The signed-in user info.
         const user = result.user;
         setUser(user);
+        // ...
       })
       .catch((error) => {
         // Handle Errors here.
@@ -36,6 +37,13 @@ const App = () => {
         // ...
       });
   };
+  // Sign Out
+  const handleSignOut = () => {
+    auth.signOut().then(() => {
+      setUser({});
+    });
+  };
+
   // Sign in with email and password
   const signInWithEmail = () => {
     createUserWithEmailAndPassword(auth, email, password)
@@ -53,7 +61,6 @@ const App = () => {
         // ..
       });
   };
-
   const userInfo = (
     <Stack spacing={2} direction="row" justifyContent="center">
       <Avatar
@@ -62,6 +69,9 @@ const App = () => {
         sx={{ width: 24, height: 24 }}
       />
       <p>{user.displayName}</p>
+      <Button variant="contained" onClick={() => handleSignOut()}>
+        Sign Out
+      </Button>
     </Stack>
   );
   return (
