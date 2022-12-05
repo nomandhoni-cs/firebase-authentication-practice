@@ -24,6 +24,7 @@ const App = () => {
         // The signed-in user info.
         const user = result.user;
         setUser(user);
+        console.log(user);
         // ...
       })
       .catch((error) => {
@@ -44,10 +45,17 @@ const App = () => {
     });
   };
 
+  // Handle input field empty
+  const handleInputEmpty = () => {
+    if (email === "" || password === "" || displayName === "") {
+      alert("Please fill up all the fields");
+    }
+  };
   // Sign in with email and password
   const signInWithEmail = () => {
+    handleInputEmpty();
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+    .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         user.displayName = displayName;
@@ -61,6 +69,7 @@ const App = () => {
         // ..
       });
   };
+
   const userInfo = (
     <Stack spacing={2} direction="row" justifyContent="center">
       <Avatar
@@ -78,6 +87,7 @@ const App = () => {
     <div className="App">
       {user.displayName && userInfo}
       <Box
+      justifyContent="center"
         id="form"
         component="form"
         sx={{
